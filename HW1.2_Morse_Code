@@ -1,0 +1,86 @@
+#include "mbed.h"
+
+DigitalOut myled(LED1);
+
+int main()
+{
+    // Blink LED
+   
+                                                          //sos=  3 unit on , 
+
+                                                            //space between same letter 1
+                                                        //space between letter is 3 unit // word is 7 unit
+        myled = 1; // short                          // H begin
+        ThisThread::sleep_for(1s);
+        myled.write(0);
+        ThisThread::sleep_for(1s);
+        myled = 1; // short             // H begin
+        ThisThread::sleep_for(1s);
+        myled.write(0);
+        ThisThread::sleep_for(1s);
+        myled = 1; // short 
+        ThisThread::sleep_for(1s);
+        myled.write(0);
+        ThisThread::sleep_for(1s);
+        myled = 1; // short 
+        printf(" H\n\r");
+        ThisThread::sleep_for(1s);
+        myled.write(0);
+        ThisThread::sleep_for(3s);   
+
+    
+        myled = 1;     //short                                  // I begin
+        ThisThread::sleep_for(1s);
+        myled.write(0);
+        ThisThread::sleep_for(1s);
+        myled = 1; // short   
+        printf(" I \n\r");
+        ThisThread::sleep_for(1s);
+        myled.write(0);         
+        ThisThread::sleep_for(7s);                      // word change 
+        
+        
+        myled = 1; //short              // s begin
+        ThisThread::sleep_for(1s);
+        myled.write(0);
+        ThisThread::sleep_for(1s);
+        myled = 1; // short      
+        ThisThread::sleep_for(1s);
+        myled.write(0);
+        ThisThread::sleep_for(1s);
+        myled = 1; // short      
+        printf(" S \n\r");
+        ThisThread::sleep_for(1s);
+        myled.write(0);
+        ThisThread::sleep_for(3s);                          //s end  3sec pin is low
+        
+                                                            
+        myled = 1;    //long                                      // o start
+        ThisThread::sleep_for(3s);
+        myled.write(0);
+        ThisThread::sleep_for(1s);
+        myled = 1;         //long                                  
+        ThisThread::sleep_for(3s);
+        myled.write(0);
+        ThisThread::sleep_for(1s);
+        myled = 1;           //long                                 
+        printf(" O \n\r");
+        ThisThread::sleep_for(3s);
+        myled.write(0);
+        ThisThread::sleep_for(3s);                          // O end 3 sec pin is 3
+
+        myled = 1; // short                  // s begin
+        ThisThread::sleep_for(1s);
+        myled.write(0);
+        ThisThread::sleep_for(1s);
+        myled = 1; // short      
+        ThisThread::sleep_for(1s);
+        myled.write(0);
+        ThisThread::sleep_for(1s);
+        myled = 1; // short      
+        printf(" S \n\r");
+        ThisThread::sleep_for(1s);
+        myled.write(0);
+        ThisThread::sleep_for(3s);                     //s end 
+        
+}
