@@ -1,0 +1,51 @@
+include "mbed.h"
+ 
+DigitalIn userButton(BUTTON1);
+DigitalOut led(LED1);
+Timer timer;
+int flag=0;
+int ok=0;
+ 
+bool buttonDown = false;
+
+int main() {
+	userButton.mode(PullUp);
+	while (true) {  // run forever
+		timer.start();
+		if(timer.read() > 4){   
+			timer.reset(); 
+			ok = 1;
+			//printf("The timer is %f seconds",timer.read());
+			printf("The flag is %d \n\r",flag);
+			printf("start pressing\n\r");
+		} 
+		if(!userButton){  // button is pressed
+			if(!buttonDown) {  // a new button press
+				buttonDown = true;
+				flag+=1;
+				ThisThread::sleep_for(1s);
+				printf("%d\n\r",flag);
+				printf("button press\n\r");
+			}else { // button isn't pressed
+				buttonDown = false;
+				//printf("button is not press\n\r");
+			}
+		}
+		//output
+		if(ok){
+			if(flag==1){
+				printf("short button press\n\r");
+				led = !led;                 // toogle LED
+				ThisThread::sleep_for(1s);
+				led.write(0); 
+			}else if(flag==3){
+				printf("long button press\n\r");
+				led = !led;                 // toogle LED
+				ThisThread::sleep_for(3s);
+				led.write(0);
+			}
+			ok = 0;
+			flag=0;
+		}
+	}
+}
