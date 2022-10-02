@@ -1,0 +1,82 @@
+#include "mbed.h"
+ 
+DigitalIn userButton(BUTTON1);
+DigitalOut led(LED1);
+Timer timer;
+int flag=0;
+int ok=0;
+int counts=0;
+int countl=0;
+
+
+BusOut display(D6, D7, D9, D10, D11, D5, D4, D8);
+char table[10] = {0x76, 0x06, 0x6D, 0x3F, 0x6D};
+                // h   , i   , s   , o    , s
+ 
+bool buttonDown = false;
+
+int main() {
+	userButton.mode(PullUp);
+	while (true) {  // run forever
+		timer.start();
+		if(timer.read() > 4){   
+			timer.reset(); 
+			ok = 1;
+			//printf("The timer is %f seconds",timer.read());
+			printf("The flag is %d \n\r",flag);
+			printf("start pressing\n\r");
+		} 
+		if(!userButton){  // button is pressed
+			if(!buttonDown) {  // a new button press
+				buttonDown = true;
+				flag+=1;
+				ThisThread::sleep_for(1s);
+				printf("%d\n\r",flag);
+				printf("button press\n\r");
+			}else { // button isn't pressed
+				buttonDown = false;
+				//printf("button is not press\n\r");
+			}
+		}
+		//output
+		if(ok){
+			if(flag==1){
+				printf("short button press\n\r");
+				led = !led;                 // toogle LED
+				ThisThread::sleep_for(1s);
+				led.write(0); 
+                counts += 1; 
+                if (countl ==1){        //if countl start set s = 0;
+                    counts= 0;
+                }
+			}else if(flag==3){
+				printf("long button press\n\r");
+				led = !led;                 // toogle LED
+				ThisThread::sleep_for(3s);
+				led.write(0);
+                countl += 1;
+                if (counts ==1){        //if counts activate set l = 0;
+                    countl = 0;
+                }
+			}
+			ok = 0;
+			flag=0;
+		}
+
+        
+        // 7 seg display
+        if (counts == 3){
+            display = table[2];             // show S
+            ThisThread::sleep_for(1s);
+            counts = 0; 
+            printf("s\n\r");
+        }
+        if (countl == 3){                   //show O
+            display = table[3];
+            ThisThread::sleep_for(1s);
+            countl = 0; 
+            printf("o\n\r");
+        }
+	}
+}
+
