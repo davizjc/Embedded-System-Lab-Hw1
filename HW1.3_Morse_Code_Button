@@ -16,7 +16,7 @@ int main() {
 			timer.reset(); 
 			ok = 1;
 			//printf("The timer is %f seconds",timer.read());
-			printf("The flag is %d \n\r",flag);
+			//printf("The flag is %d \n\r",flag);
 			printf("start pressing\n\r");
 		} 
 		if(!userButton){  // button is pressed
